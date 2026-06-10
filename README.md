@@ -1,6 +1,6 @@
 # ChurchSwap
 
-Real-time person detection using YOLOv8 that monitors a defined podium area via webcam. Detects when a person enters/leaves the podium zone and prints status. Ready for ATEM switcher integration and multi-camera support in Phase 2.
+ChurchSwap is a real-time person detection system that automatically manages camera switching during church services. Using YOLOv8 computer vision, it monitors a defined podium area via webcam. When someone is at the podium, the system keeps the focused camera view active. When the podium zone is empty, it automatically switches to a wide-angle camera via ATEM switcher integration. This enables seamless, hands-free camera management for livestreaming without requiring a dedicated operator to manually switch between views.
 
 ## Installation
 ```bash
