@@ -9,6 +9,12 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 import logging
+import PyATEMMax
+from time import sleep
+
+switcher = PyATEMMax.ATEMMax()
+switcher.connect("192.168.1.111")
+switcher.waitForConnection()
 
 logging.getLogger('ultralytics').setLevel(logging.ERROR)
 
@@ -19,19 +25,20 @@ podium_x_max = podium[2]  # 600
 persontrackingmodel = YOLO("yolov8s.pt")
 metime = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
+person_in_podium = False
+
 while True:
     ret, frame = metime.read()
-    results = persontrackingmodel.track(source=frame, verbose=False)
+    results = persontrackingmodel.track(
+        source=frame, verbose=False, classes=[0])
 
-    person_in_podium = False
     for box in results[0].boxes:
-        if int(box.cls) == 0:
-            x1, y1, x2, y2 = box.xyxy[0]
-            center_x = (x1 + x2) / 2
-
-            if podium[0] < center_x < podium[2]:
-                person_in_podium = True
-    print(f"Boxes detected: {len(results[0].boxes)}")  # Add
+        human_count = sum(1 for box in results[0].boxes if int(box.cls) == 0)
+        if human_count < 1:
+            person_in_podium = False
+            sleep(2)
+            switcher.setProgramInputVideoSource(1, 2)
+            break
     annotated_frame = results[0].plot()
 
     if not ret:
