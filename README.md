@@ -8,5 +8,6 @@ pip install -r requirements.txt
 python churchswap.py
 ```
 
-## Status
-MVP v1 - Detection working, ready for church hardware testing.
+# Intended Use
+
+This project was designed to be used locally in a church Audio/Visual setting, however it has the ability to be utilized in various different scenarios. Churchswap is most efficient when working with stationary tripods, with 2 or more camera connected to a BlackMagic Design ATEMMini.
