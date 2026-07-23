@@ -1,10 +1,3 @@
-"""
-ChurchSwap: Real-time webcam feed with basic controls.
-Press 'q' to exit the application.
-"""
-# pylint: disable=no-member
-# run script:python churchswap.py
-
 import cv2
 import numpy as np
 from ultralytics import YOLO
@@ -12,8 +5,13 @@ import logging
 import PyATEMMax
 from time import sleep
 
+load_dotenv()
+
+# Default IP address if not set in .env
+IP_ADDRESS = os.getenv("IP_ADDRESS", "192.168.1.111")
+
 switcher = PyATEMMax.ATEMMax()
-switcher.connect("192.168.1.111")
+switcher.connect(IP_ADDRESS)
 switcher.waitForConnection()
 
 logging.getLogger('ultralytics').setLevel(logging.ERROR)
